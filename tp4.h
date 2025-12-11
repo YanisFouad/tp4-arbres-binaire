@@ -28,4 +28,6 @@ T_Noeud* rechercherMot(T_Index index, char *mot);
 void afficherOccurencesMot(T_Index index, char *mot);
 void construireTexte(T_Index index, char *filename);
 
+
+int compareMot(char *mot1, char*mot2);
 #endif /* TP4_H */
