@@ -38,17 +38,13 @@ char* split_first_word(char* to_split, char split_char) {
 }
 
 int compareMot(char *mot1, char*mot2) {
-    char* tolowerMot1 = tolower(mot1);
-    char* tolowerMot2 = tolower(mot2);
-
-    int result = strcmp(tolowerMot1, tolowerMot2);
-
+    int result = strcasecmp(mot1, mot2); // ignore case during comparison
     if (result < 0) {
-        printf(" strcmp = -1 ; Le mot '%s' est avant le mot '%s'\n", mot1, mot2);
+        printf(" strcmp = %d ; Le mot '%s' est avant le mot '%s'\n",result, mot1, mot2);
     } else if (result > 0) {
-        printf(" strcmp = 1 ; Le mot '%s' est apres le mot '%s'\n", mot1, mot2);
+        printf(" strcmp = %d ; Le mot '%s' est apres le mot '%s'\n",result, mot1, mot2);
     } else {
-        printf(" strcmp = 0 Le mot '%s' est egal au mot '%s'\n", mot1, mot2);
+        printf(" strcmp = %d Le mot '%s' est egal au mot '%s'\n",result, mot1, mot2);
     }
     return result; 
 }
