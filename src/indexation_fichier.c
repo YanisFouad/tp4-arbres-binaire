@@ -5,9 +5,9 @@
 int indexerFichier(T_Index* index, char* filename) {
     FILE* file = fopen(filename, "r");
     int nb_mots = 0;
-    int ligne = 1;
-    int occurence;
-    int position;
+    int ligne = 1; // numéro de ligne
+    int occurence; // occurence dans la ligne
+    int phrase = 1; //position de la phrase
 
     char buffer[FILE_READING_BUFFER];
 
@@ -18,7 +18,7 @@ int indexerFichier(T_Index* index, char* filename) {
 
     while (fgets(buffer, FILE_READING_BUFFER, file)) {
         char* char_cursor = buffer;
-
+        occurence = 0 ;
         // On itères sur tous les caractères de la ligne
         while (*char_cursor != '\0' && *char_cursor != '\n') {
             // Sauter les espaces
@@ -30,17 +30,22 @@ int indexerFichier(T_Index* index, char* filename) {
             if (*char_cursor == '\0' || *char_cursor == '\n') {
                 break;
             }
+            if (*char_cursor == '.') {
+                phrase++;
+                char_cursor++;
+                continue;
+            }
 
             // Extraire le mot
             char* word = split_first_word(char_cursor, ' ');
 
             if (word != NULL) {
                 occurence++;
-                ajouterOccurence(index, word, ligne, occurence, 0);
+                ajouterOccurence(index, word, ligne, occurence, phrase);
                 nb_mots++;
 
                 // On avance le curseur jusqu'à la fin du mot extrait
-                while (*char_cursor != ' ' && *char_cursor != '\0' && *char_cursor != '\n') {
+                while (*char_cursor != ' ' && *char_cursor != '.' && *char_cursor != '\0' && *char_cursor != '\n') {
                     char_cursor++;
                 }
 
@@ -48,7 +53,9 @@ int indexerFichier(T_Index* index, char* filename) {
             } else {
                 char_cursor++;
             }
+
         }
+        ligne++;
     }
 
     fclose(file);

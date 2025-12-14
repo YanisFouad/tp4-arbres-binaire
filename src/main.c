@@ -4,6 +4,9 @@
 
 int main()
 {
-    
+    T_Index *index;
+    index = initIndex();
+    indexerFichier(index, "FileTest/sample.txt");
+    afficherIndex(*index);
     return 0;
 }

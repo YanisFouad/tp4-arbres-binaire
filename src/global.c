@@ -1,5 +1,7 @@
 #include "../include/tp4.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 char* split_first_word(char* to_split, char split_char) {
     if (to_split == NULL || *to_split == '\0') {
@@ -17,7 +19,7 @@ char* split_first_word(char* to_split, char split_char) {
 
     // Trouver la fin du mot
     int i = 0;
-    while (to_split[i] != '\0' && to_split[i] != split_char && to_split[i] != '\n' && i < WORD_SPLIT_BUFFER - 1) {
+    while (to_split[i] != '\0' && to_split[i] != split_char && to_split[i] != '\n' && to_split[i] !='.' && i < WORD_SPLIT_BUFFER - 1) {
         i++;
     }
 
@@ -27,10 +29,16 @@ char* split_first_word(char* to_split, char split_char) {
 
     // On copie le mot dans une nouvelle string
     char* word = (char*) malloc((i + 1) * sizeof(char));
+    if(word == NULL) {
+        printf("Erreur d'allocation memoire\n");
+        return NULL;
+    }
 
     for (int j = 0; j < i; j++) {
-        word[j] = to_split[j];
+        
+         word[j] = to_split[j];
     }
+
 
     word[i] = '\0';
 

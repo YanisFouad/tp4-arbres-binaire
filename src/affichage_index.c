@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 
 void afficherIndex(T_Index index) {
     T_Noeud* current = index.racine;
@@ -37,9 +38,10 @@ void affichageSpe(T_Noeud* noeud, char* lastletter) {
 
     /* Affichage de TOUTES les positions */
     for (T_Position* pos = noeud->listePositions; pos != NULL; pos = pos->suivant) {
-        printf(" |---- (l:%d, o:%d, p:%d)\n",
+        printf("|---- (l:%d, o:%d, p:%d)\n",
                pos->numeroLigne,
                pos->ordre,
                pos->numeroPhrase);
     }
+    printf("|\n");
 }

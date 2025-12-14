@@ -1,6 +1,7 @@
 #include "../include/tp4.h"
 #include <stdlib.h>
 #include <stdio.h>  
+#include <string.h>
 
 
 int ajouterOccurence(T_Index *index, char *mot, int ligne, int ordre, int phrase) {
