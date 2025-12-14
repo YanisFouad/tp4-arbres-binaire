@@ -62,3 +62,7 @@ int ajouterOccurence(T_Index *index, char *mot, int ligne, int ordre, int phrase
     nouveauNoeud->filsGauche = NULL ;
     return 0;
 }
+
+void afficherOccurencesMot(T_Index index, char* mot){
+    
+}

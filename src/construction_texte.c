@@ -81,7 +81,7 @@ void parcoursInfixeConstruction(T_Noeud* noeud, char* phrases[255][255],int lign
    for (T_Position* pos = noeud->listePositions; pos != NULL; pos = pos->suivant) {
     if (pos->numeroPhrase >= 0 && pos->numeroPhrase < 255 && pos->ordre >= 0 && pos->ordre < 255) {
         phrases[pos->numeroPhrase][pos->ordre] = noeud->mot;
-        printf("phrases[%d][%d] = %s\n", pos->numeroPhrase, pos->ordre, noeud->mot);
+        //printf("phrases[%d][%d] = %s\n", pos->numeroPhrase, pos->ordre, noeud->mot);
         lignesPhrase[pos->numeroPhrase] = pos->numeroLigne;
     }
 
