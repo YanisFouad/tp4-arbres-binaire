@@ -7,17 +7,17 @@
 void afficherIndex(T_Index index) {
     T_Noeud* current = index.racine;
     char lastletter = '\0';
-    parcoursIndexInfixe(current, &lastletter);
+    parcoursInfixeAffichage(current, &lastletter);
 }
 
-void parcoursIndexInfixe(T_Noeud* noeud, char* lastletter) {
+void parcoursInfixeAffichage(T_Noeud* noeud, char* lastletter) {
     if (noeud == NULL) {
         return;
     }
 
-    parcoursIndexInfixe(noeud->filsGauche, lastletter);
+    parcoursInfixeAffichage(noeud->filsGauche, lastletter);
     affichageSpe(noeud, lastletter);
-    parcoursIndexInfixe(noeud->filsDroit, lastletter);
+    parcoursInfixeAffichage(noeud->filsDroit, lastletter);
 }
 
 void affichageSpe(T_Noeud* noeud, char* lastletter) {

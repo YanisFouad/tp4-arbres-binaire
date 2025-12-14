@@ -8,5 +8,9 @@ int main()
     index = initIndex();
     indexerFichier(index, "FileTest/sample.txt");
     afficherIndex(*index);
+    printf(" Construction texte\n\n");
+    construireTexte(*index, "FileTest/output.txt");
+    printf("Texte construit dans FileTest/output.txt\n");
     return 0;
+
 }

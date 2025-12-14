@@ -1,4 +1,4 @@
-Chat mange souris. chat court vite.
-Souris mange fromage. CHAT mange encore.
-Avion vole haut. avion vole bas.
-Bateau flotte. bateau flotte aussi.
+Chat mange Souris. Chat court Vite.
+Souris mange Fromage. Chat mange Encore.
+Avion vole Haut. Avion vole Bas.
+Bateau flotte. Bateau flotte Aussi.
