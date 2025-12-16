@@ -6,7 +6,7 @@
 T_Noeud* rechercherMot(T_Index index, char* mot) {
     T_Noeud* current = index.racine;
     while (current != NULL) {
-        int cmp = compareMot(mot, current->mot);
+        int cmp = strcasecmp(mot, current->mot);
         if (cmp == 0) {
             return current;  
         } else if (cmp < 0) {

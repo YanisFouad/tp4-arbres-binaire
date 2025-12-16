@@ -39,7 +39,9 @@ void afficherOccurencesMot(T_Index index, char* mot);
 void construireTexte(T_Index index, char* filename);
 
 T_Index * initIndex();
+void freeIndex (T_Index * index);
+void freeNoeud (T_Noeud * noeud);
 
-int compareMot(char* mot1, char* mot2);
+// int compareMot(char* mot1, char* mot2);
 
 #endif /* TP4_H */
