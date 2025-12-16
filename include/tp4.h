@@ -3,6 +3,8 @@
 
 #define FILE_READING_BUFFER 255
 #define WORD_SPLIT_BUFFER 255
+#define MAX_SENTENCES 255
+#define MAX_WORDS_PER_SENTENCE 255
 
 typedef struct Position {
     int numeroLigne;

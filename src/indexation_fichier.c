@@ -18,7 +18,7 @@ int indexerFichier(T_Index* index, char* filename) {
 
     while (fgets(buffer, FILE_READING_BUFFER, file)) {
         char* char_cursor = buffer;
-        occurence = 0 ;
+        occurence = 0;
         // On itères sur tous les caractères de la ligne
         while (*char_cursor != '\0' && *char_cursor != '\n') {
             // Sauter les espaces

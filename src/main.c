@@ -65,7 +65,7 @@ int main(){
                 break;
             }
             case 5:{
-                char mot[100];
+                char mot[255];
                 printf("Entrez le mot pour afficher ses occurrences : ");
                 scanf("%s", mot);
                 afficherOccurencesMot(*index, mot);

@@ -13,7 +13,6 @@ T_Position* creerPosition(int ligne, int ordre, int phrase) {
     return position;
 }
 
-
 T_Position* ajouterPosition(T_Position* listeP, int ligne, int ordre, int phrase) {
     T_Position* position = creerPosition(ligne, ordre, phrase);
 

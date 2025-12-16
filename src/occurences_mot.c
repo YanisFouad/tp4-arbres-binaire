@@ -64,5 +64,40 @@ int ajouterOccurence(T_Index *index, char *mot, int ligne, int ordre, int phrase
 }
 
 void afficherOccurencesMot(T_Index index, char* mot){
+    T_Noeud* node = rechercherMot(index, mot);
     
+    if (node == NULL) {
+        printf("Le mot '%s' n'est pas present dans l'index.\n", mot);
+        return;
+    }
+    
+    printf("Mot = \"%s\"\n", mot);
+    printf("Occurences = %d\n", node->nbOccurrences);
+    
+    char* sentences[MAX_SENTENCES][MAX_WORDS_PER_SENTENCE];
+    int sentenceLines[MAX_SENTENCES];
+
+    for (int i = 0; i < MAX_SENTENCES; i++) {
+        sentenceLines[i] = -1;
+        for (int j = 0; j < MAX_WORDS_PER_SENTENCE; j++) {
+            sentences[i][j] = NULL;
+        }
+    }
+    
+    // Construire les phrases à partir de l'index
+    parcoursInfixeConstruction(index.racine, sentences, sentenceLines);
+    
+    // Afficher chaque occurrence avec sa phrase
+    for (T_Position* pos = node->listePositions; pos != NULL; pos = pos->suivant) {
+        int s = pos->numeroPhrase;
+        printf("| Ligne %d, mot %d : ", pos->numeroLigne, pos->ordre);
+        
+        // Afficher la phrase complète
+        for (int w = 0; w < MAX_WORDS_PER_SENTENCE; w++) {
+            if (sentences[s][w] != NULL) {
+                printf("%s ", sentences[s][w]);
+            }
+        }
+        printf("\b.\n");
+    }
 }
