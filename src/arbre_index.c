@@ -9,3 +9,25 @@ T_Index* initIndex(void) {
     index->nbMotsTotaux = 0;
     return index;
 }
+void freeIndex (T_Index * index){
+    if (index == NULL) return ;
+    freeNoeud (index->racine) ;
+    free (index) ;  
+}
+void freeNoeud (T_Noeud * noeud){
+    if (noeud == NULL) return ;
+    freeNoeud (noeud->filsGauche) ;
+    freeNoeud (noeud->filsDroit) ;
+
+    
+    T_Position * pos = noeud->listePositions ;
+    while (pos != NULL){
+        T_Position * temp = pos ;
+        pos = pos->suivant ;
+        free (temp) ;
+    }
+
+    free(noeud->mot);
+
+    free (noeud) ;
+}

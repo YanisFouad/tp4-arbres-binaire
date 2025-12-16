@@ -45,14 +45,14 @@ char* split_first_word(char* to_split, char split_char) {
     return word;
 }
 
-int compareMot(char *mot1, char*mot2) {
-    int result = strcasecmp(mot1, mot2); // ignore case during comparison
-    if (result < 0) {
-        //printf(" strcmp = %d ; Le mot '%s' est avant le mot '%s'\n",result, mot1, mot2);
-    } else if (result > 0) {
-        //printf(" strcmp = %d ; Le mot '%s' est apres le mot '%s'\n",result, mot1, mot2);
-    } else {
-        //printf(" strcmp = %d Le mot '%s' est egal au mot '%s'\n",result, mot1, mot2);
-    }
-    return result; 
-}
+// int compareMot(char *mot1, char*mot2) {
+//     int result = strcasecmp(mot1, mot2); // ignore case during comparison
+//     if (result < 0) {
+//         //printf(" strcmp = %d ; Le mot '%s' est avant le mot '%s'\n",result, mot1, mot2);
+//     } else if (result > 0) {
+//         //printf(" strcmp = %d ; Le mot '%s' est apres le mot '%s'\n",result, mot1, mot2);
+//     } else {
+//         //printf(" strcmp = %d Le mot '%s' est egal au mot '%s'\n",result, mot1, mot2);
+//     }
+//     return result; 
+// }

@@ -26,7 +26,7 @@ int ajouterOccurence(T_Index *index, char *mot, int ligne, int ordre, int phrase
 
     while(current != NULL){
         suivant = current ; 
-        compare = compareMot(mot, current->mot) ;
+        compare = strcasecmp(mot, current->mot) ;
         if (compare <0){ // peut etre remplacer par strcmp(mot,current->mot)
             current = current->filsGauche ;
         }

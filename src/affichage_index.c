@@ -36,12 +36,9 @@ void affichageSpe(T_Noeud* noeud, char* lastletter) {
     /* Affichage du mot */
     printf("|-- %s\n", noeud->mot);
 
-    /* Affichage de TOUTES les positions */
+    /* Affichage de toutes les positions */
     for (T_Position* pos = noeud->listePositions; pos != NULL; pos = pos->suivant) {
-        printf("|---- (l:%d, o:%d, p:%d)\n",
-               pos->numeroLigne,
-               pos->ordre,
-               pos->numeroPhrase);
+        printf("|---- (l:%d, o:%d, p:%d)\n",pos->numeroLigne, pos->ordre, pos->numeroPhrase);
     }
     printf("|\n");
 }

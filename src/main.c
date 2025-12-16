@@ -15,8 +15,7 @@
 
 // }
 int main(){
-    T_Index *index;
-    index = initIndex();
+    T_Index *index = initIndex();
     int choix = 0 ;
 
     printf("Bienvenue dans le programme d'indexation de texte !\n");
@@ -40,6 +39,10 @@ int main(){
                 char filename[100];
                 printf("Entrez le nom du fichier à charger : ");
                 scanf("%s", filename);
+                /*Necessaire Au second chargement*/
+                freeIndex(index);
+                index = initIndex();
+
                 indexerFichier(index, filename);
                 break;
             }
@@ -80,6 +83,7 @@ int main(){
                 break;
             }
             case 7:{
+                freeIndex(index);
                 printf("Au revoir !\n");
                 break;
             }
