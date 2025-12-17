@@ -31,7 +31,7 @@ T_Position* ajouterPosition(T_Position* listeP, int ligne, int ordre, int phrase
             }
 
             if ((current->numeroLigne < ligne && ligne < suivant->numeroLigne) && (current->ordre < ordre && ordre < suivant->ordre)) {
-                
+
             }
 
             current = current->suivant;

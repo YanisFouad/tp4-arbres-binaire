@@ -39,12 +39,12 @@ void construireTexte(T_Index index, char* filename);
 /*Fonctions utilitaires*/
 T_Position* creerPosition(int ligne, int ordre, int phrase);
 char* split_first_word(char* to_split, char split_char);
-void parcoursInfixeAffichage(T_Noeud* noeud, char * lastletter);
-void affichageSpe(T_Noeud* noeud,char * lastletter);
-void parcoursInfixeConstruction(T_Noeud* noeud, char* phrases[255][255],int lignesPhrase[255]);
-T_Index * initIndex();
-void freeIndex (T_Index * index);
-void freeNoeud (T_Noeud * noeud);
+void parcoursInfixeAffichage(T_Noeud* noeud, char* lastletter);
+void affichageSpe(T_Noeud* noeud, char* lastletter);
+void parcoursInfixeConstruction(T_Noeud* noeud, char* phrases[255][255], int lignesPhrase[255]);
+T_Index* initIndex();
+void freeIndex(T_Index* index);
+void freeNoeud(T_Noeud* noeud);
 
 // int compareMot(char* mot1, char* mot2);
 
