@@ -3,7 +3,17 @@
 #include <stdio.h>  
 #include <string.h>
 
-
+/**
+ * @brief Ajoute une occurrence d'un mot dans l'index
+ * @details Si le mot existe déjà, ajoute la position à sa liste.
+ *          Sinon, crée un nouveau noeud dans l'arbre binaire de recherche.
+ * @param index Pointeur vers l'index à mettre à jour
+ * @param mot Mot à ajouter (sera copié)
+ * @param ligne Numéro de ligne du mot
+ * @param ordre Position du mot dans la phrase
+ * @param phrase Numéro de la phrase
+ * @return 0 en cas de succès, -1 en cas d'erreur d'allocation
+ */
 int ajouterOccurence(T_Index* index, char* mot, int ligne, int ordre, int phrase) {
     T_Noeud* current = index->racine;
     T_Noeud* suivant = NULL;
@@ -61,41 +71,48 @@ int ajouterOccurence(T_Index* index, char* mot, int ligne, int ordre, int phrase
     return 0;
 }
 
+/**
+ * @brief Affiche toutes les occurrences d'un mot avec leur contexte (phrase complète)
+ * @details Pour chaque occurrence, affiche la ligne, la position et la phrase entière
+ *          dans laquelle le mot apparaît.
+ * @param index Index contenant les mots
+ * @param mot Mot dont on veut afficher les occurrences
+ */
 void afficherOccurencesMot(T_Index index, char* mot) {
     T_Noeud* node = rechercherMot(index, mot);
 
     if (node == NULL) {
-        printf("Le mot '%s' n'est pas present dans l'index.\n", mot);
+        printf("Le mot '%s' n'est pas present dans l'index.\n\n", mot);
         return;
     }
 
     printf("Mot = \"%s\"\n", mot);
-    printf("Occurences = %d\n", node->nbOccurrences);
+    printf("Occurences = %d\n\n", node->nbOccurrences);
 
-    char* sentences[MAX_SENTENCES][MAX_WORDS_PER_SENTENCE];
-    int sentenceLines[MAX_SENTENCES];
-
-    for (int i = 0; i < MAX_SENTENCES; i++) {
-        sentenceLines[i] = -1;
-        for (int j = 0; j < MAX_WORDS_PER_SENTENCE; j++) {
-            sentences[i][j] = NULL;
-        }
-    }
-
-    // Construire les phrases à partir de l'index
-    parcoursInfixeConstruction(index.racine, sentences, sentenceLines);
+    // Collecter et trier toutes les occurrences
+    T_ListeOccurrences* liste = creerListeOccurrences();
+    collecterOccurrences(index.racine, liste);
+    trierOccurrences(liste);
 
     // Afficher chaque occurrence avec sa phrase
     for (T_Position* pos = node->listePositions; pos != NULL; pos = pos->suivant) {
-        int s = pos->numeroPhrase;
-        printf("| Ligne %d, mot %d : ", pos->numeroLigne, pos->ordre);
+        printf("| Ligne %d, mot %d : ", pos->numeroLigne + 1, pos->ordre);
 
-        // Afficher la phrase complète
-        for (int w = 0; w < MAX_WORDS_PER_SENTENCE; w++) {
-            if (sentences[s][w] != NULL) {
-                printf("%s ", sentences[s][w]);
+        // Parcourir le tableau trié pour afficher la phrase - O(m) dans le pire cas
+        int firstWord = 1;
+        for (int i = 0; i < liste->nbOccurrences; i++) {
+            T_Occurrence* occ = &liste->occurrences[i];
+            if (occ->ligne == pos->numeroLigne && occ->phrase == pos->numeroPhrase) {
+                if (!firstWord) {
+                    printf(" ");
+                }
+                printf("%s", occ->mot);
+                firstWord = 0;
             }
         }
-        printf("\b.\n");
+        printf(".\n");
     }
+
+    printf("\n");
+    libererListeOccurrences(liste);
 }

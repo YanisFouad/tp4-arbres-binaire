@@ -1,8 +1,14 @@
 #include "../include/tp4.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <strings.h>
 
-
+/**
+ * @brief Recherche un mot dans l'arbre binaire de recherche
+ * @param index Index contenant l'arbre de mots
+ * @param mot Mot à rechercher (insensible à la casse)
+ * @return Pointeur vers le noeud contenant le mot, NULL si non trouvé
+ */
 T_Noeud* rechercherMot(T_Index index, char* mot) {
     T_Noeud* current = index.racine;
     while (current != NULL) {
@@ -18,75 +24,64 @@ T_Noeud* rechercherMot(T_Index index, char* mot) {
     return NULL;
 }
 
+/**
+ * @brief Reconstruit le texte original à partir de l'index et l'écrit dans un fichier
+ * @details Collecte les occurrences (O(m)), trie (O(m log m)), puis écrit (O(m))
+ *          Complexité totale: O(m log m)
+ * @param index Index contenant tous les mots et leurs positions
+ * @param filename Chemin du fichier de sortie
+ */
 void construireTexte(T_Index index, char* filename) {
-    char* phrases[255][255] = { NULL };
-    int lignesPhrase[255];
-    for (int i = 0; i < 255; i++) {
-        lignesPhrase[i] = -1;
-    }
+    // Collecter et trier toutes les occurrences
+    T_ListeOccurrences* liste = creerListeOccurrences();
+    collecterOccurrences(index.racine, liste);
+    trierOccurrences(liste);
 
-    parcoursInfixeConstruction(index.racine, phrases, lignesPhrase);
-
+    // Ouverture du fichier
     FILE* f = fopen(filename, "w");
     if (f == NULL) {
         perror("fopen");
         printf("Impossible de créer le fichier : %s\n", filename);
+        libererListeOccurrences(liste);
         return;
     }
 
-    int currentLine = -1;
+    int currentLine = liste->occurrences[0].ligne;
+    int currentPhrase = liste->occurrences[0].phrase;
+    int isFirstWord = 1;
 
-    for (int p = 0; p < 255; p++) {
+    // Écriture séquentielle - O(m)
+    for (int i = 0; i < liste->nbOccurrences; i++) {
+        T_Occurrence* occ = &liste->occurrences[i];
 
-        if (lignesPhrase[p] == -1) {
-            continue;  // aucune phrase ici
+        // Nouvelle ligne
+        if (occ->ligne != currentLine) {
+            fprintf(f, ".\n");
+            currentLine = occ->ligne;
+            currentPhrase = occ->phrase;
+            fprintf(f, "%s", occ->mot);
+            isFirstWord = 0;
         }
-
-        /* saut de ligne uniquement si la ligne change */
-        if (currentLine != -1 && lignesPhrase[p] != currentLine) {
-            fprintf(f, "\n");
+        // Nouvelle phrase sur la même ligne
+        else if (occ->phrase != currentPhrase) {
+            fprintf(f, ". %s", occ->mot);
+            currentPhrase = occ->phrase;
+            isFirstWord = 0;
         }
-        currentLine = lignesPhrase[p];
-
-        int first = 1;
-
-        for (int o = 0; o < 255; o++) {
-            if (phrases[p][o] != NULL) {
-                if (!first) {
-                    fprintf(f, " ");
-                }
-                fprintf(f, "%s", phrases[p][o]);
-                first = 0;
+        // Espace entre les mots
+        else {
+            if (isFirstWord) {
+                fprintf(f, "%s", occ->mot);
+                isFirstWord = 0;
+            } else {
+                fprintf(f, " %s", occ->mot);
             }
         }
-
-        if (!first) {
-            fprintf(f, ". ");
-        }
     }
 
-    fprintf(f, "\n");
+    fprintf(f, ".\n");
     fclose(f);
+    libererListeOccurrences(liste);
 }
 
-
-void parcoursInfixeConstruction(T_Noeud* noeud, char* phrases[255][255], int lignesPhrase[255]) {
-    if (noeud == NULL) {
-        return;
-    }
-
-    parcoursInfixeConstruction(noeud->filsGauche, phrases, lignesPhrase);
-
-    /* Place toutes les occurrences du mot dans le tableau */
-    for (T_Position* pos = noeud->listePositions; pos != NULL; pos = pos->suivant) {
-        if (pos->numeroPhrase >= 0 && pos->numeroPhrase < 255 && pos->ordre >= 0 && pos->ordre < 255) {
-            phrases[pos->numeroPhrase][pos->ordre] = noeud->mot;
-            //printf("phrases[%d][%d] = %s\n", pos->numeroPhrase, pos->ordre, noeud->mot);
-            lignesPhrase[pos->numeroPhrase] = pos->numeroLigne;
-        }
-
-    }
-
-    parcoursInfixeConstruction(noeud->filsDroit, phrases, lignesPhrase);
-}
 
